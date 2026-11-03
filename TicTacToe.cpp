@@ -24,6 +24,25 @@ void mostrarTablero() {
 }
 
 int main() {
+    char turno = 'X';
+    int casilla;
+
+    for (int jugada = 0; jugada < 9; jugada++) {
+        mostrarTablero();
+        cout << "Turno del jugador " << turno << ". Elige una casilla (1-9): ";
+        cin >> casilla;
+
+        int fila = (casilla - 1) / 3;
+        int columna = (casilla - 1) % 3;
+        tablero[fila][columna] = turno;
+
+        if (turno == 'X') {
+            turno = 'O';
+        } else {
+            turno = 'X';
+        }
+    }
+
     mostrarTablero();
     return 0;
 }

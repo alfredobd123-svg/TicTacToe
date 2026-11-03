@@ -26,15 +26,28 @@ void mostrarTablero() {
 int main() {
     char turno = 'X';
     int casilla;
+    int jugadas = 0;
 
-    for (int jugada = 0; jugada < 9; jugada++) {
+    while (jugadas < 9) {
         mostrarTablero();
         cout << "Turno del jugador " << turno << ". Elige una casilla (1-9): ";
         cin >> casilla;
 
+        if (casilla < 1 || casilla > 9) {
+            cout << "Numero invalido, intenta elegir del 1 al 9." << endl;
+            continue;
+        }
+
         int fila = (casilla - 1) / 3;
         int columna = (casilla - 1) % 3;
+
+        if (tablero[fila][columna] == 'X' || tablero[fila][columna] == 'O') {
+            cout << "Esa casilla ya esta ocupada, elige otra." << endl;
+            continue;
+        }
+
         tablero[fila][columna] = turno;
+        jugadas++;
 
         if (turno == 'X') {
             turno = 'O';

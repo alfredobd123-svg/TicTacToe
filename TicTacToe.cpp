@@ -23,12 +23,26 @@ void mostrarTablero() {
     cout << endl;
 }
 
+bool hayGanador() {
+    // Revisar filas y columnas
+    for (int i = 0; i < 3; i++) {
+        if (tablero[i][0] == tablero[i][1] && tablero[i][1] == tablero[i][2]) return true;
+        if (tablero[0][i] == tablero[1][i] && tablero[1][i] == tablero[2][i]) return true;
+    }
+    // Revisar diagonales
+    if (tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2]) return true;
+    if (tablero[0][2] == tablero[1][1] && tablero[1][1] == tablero[2][0]) return true;
+
+    return false;
+}
+
 int main() {
     char turno = 'X';
     int casilla;
     int jugadas = 0;
+    bool gano = false;
 
-    while (jugadas < 9) {
+    while (jugadas < 9 && !gano) {
         mostrarTablero();
         cout << "Turno del jugador " << turno << ". Elige una casilla (1-9): ";
         cin >> casilla;
@@ -49,13 +63,21 @@ int main() {
         tablero[fila][columna] = turno;
         jugadas++;
 
-        if (turno == 'X') {
-            turno = 'O';
+        if (hayGanador()) {
+            mostrarTablero();
+            cout << "Felicidades! Gano el jugador " << turno << "!" << endl;
+            gano = true;
+        } else if (jugadas == 9) {
+            mostrarTablero();
+            cout << "El juego termino en empate!" << endl;
         } else {
-            turno = 'X';
+            if (turno == 'X') {
+                turno = 'O';
+            } else {
+                turno = 'X';
+            }
         }
     }
 
-    mostrarTablero();
     return 0;
 }
